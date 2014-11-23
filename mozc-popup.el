@@ -42,6 +42,11 @@
 	(update . mozc-cand-popup-update))
       mozc-candidate-dispatch-table)
 
+(defface mozc-cand-overlay-description-face
+  '((t (:inherit mozc-cand-overlay-odd-face)))
+  "Face for description part of overlay candidate window."
+  :group 'mozc-faces)
+
 (defvar-local mozc-cand-popup nil)
 
 (defconst mozc-cand-popup-shortcut-spacer ". ")
@@ -79,12 +84,16 @@
 				      :summary description
 				      )))
 		 (cdr (assq 'candidate candidates)))))
+
+    (when (and index-visible focused-index candidates-size)
+      (setq footer-label
+	    (format (concat "%" (number-to-string max-width) "s")
+		    (format "%d/%d" (1+ focused-index) candidates-size))))
+
     (add-to-list
      'items
      (popup-make-item footer-label
-		      :face 'mozc-cand-overlay-footer-face
-		      :summary (when (and index-visible focused-index candidates-size)
-				 (format "%d/%d" (1+ focused-index) candidates-size)))
+		      :face 'mozc-cand-overlay-footer-face)
      t)
 
     (mozc-cand-popup-clear)
@@ -97,7 +106,7 @@
 			   :selection-face (if focused-index
 					       'mozc-cand-overlay-focused-face
 					     'mozc-cand-overlay-footer-face)
-			   :summary-face 'mozc-cand-overlay-footer-face))
+			   :summary-face 'mozc-cand-overlay-description-face))
     (popup-set-list mozc-cand-popup items)
     (if focused-index
 	(popup-select mozc-cand-popup (% focused-index 9))
