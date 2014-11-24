@@ -52,7 +52,7 @@
 (defconst mozc-cand-popup-shortcut-spacer ". ")
 (defconst mozc-cand-popup-description-space 3)
 
-(defun mozc-cand-popup-update (candidates)
+(defun mozc-cand-popup-draw (candidates)
   (let ((footer-label (mozc-protobuf-get candidates 'footer 'label))
 	(focused-index (mozc-protobuf-get candidates 'focused-index))
 	(sub-candidates (mozc-protobuf-get candidates 'subcandidates))
@@ -132,6 +132,15 @@
 	;; when not focused, select footer at once.
 	(popup-select mozc-cand-popup (1- (length items))))
       )))
+
+(defun mozc-cand-popup-update (candidates)
+  (condition-case nil
+      (mozc-with-buffer-modified-p-unchanged
+       (mozc-cand-popup-draw candidates))
+    (error
+     (mozc-cand-popup-clear)
+     ;; Fall back to the echo area version.
+     (mozc-cand-echo-area-update candidates))))
 
 (defun mozc-cand-popup-clear ()
   (popup-delete mozc-cand-popup))
