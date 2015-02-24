@@ -5,7 +5,7 @@
 ;; Author: Daisuke Kobayashi <d5884jp@gmail.com>
 ;; Version: 0.1
 ;; Keywords: i18n, extentions
-;; Package-Requires: ((popup "0.5.2") (mozc "20140802.56"))
+;; Package-Requires: ((popup "0.5.2") (mozc "0"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
