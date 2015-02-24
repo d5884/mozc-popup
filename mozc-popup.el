@@ -48,7 +48,8 @@
   "Face for description part of overlay candidate window."
   :group 'mozc-faces)
 
-(defvar-local mozc-cand-popup nil)
+(defvar mozc-cand-popup nil)
+(make-variable-buffer-local 'mozc-cand-popup)
 
 (defconst mozc-cand-popup-shortcut-spacer ". ")
 (defconst mozc-cand-popup-description-space 3)
